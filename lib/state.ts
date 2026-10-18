@@ -1,0 +1,10 @@
+import { z } from 'zod';
+const group=z.enum(['chest','back','legs','shoulder','arms','core']);
+const unit=z.enum(['reps','seconds']);
+const log=z.object({id:z.string().min(1).max(100),date:z.string().regex(/^\d{4}-\d{2}-\d{2}$/),exercise:z.string().min(1).max(60),group,unit:unit.optional(),reps:z.number().int().min(1).max(100).nullable().optional(),seconds:z.number().int().min(1).max(3600).nullable().optional(),sets:z.number().int().min(1).max(30),weight:z.number().min(0).max(1000).nullable().optional(),note:z.string().max(300).optional(),pain:z.boolean().optional()}).refine(x=>x.unit==='seconds'?x.seconds!=null:x.reps!=null);
+const custom=z.object({id:z.string().max(100),name:z.string().min(1).max(60),group,unit,note:z.string().max(300),equipment:z.enum(['barbell','dumbbell','smith','cable','machine','body','other']).optional()});
+const manual=z.object({name:z.string().min(1).max(60),sets:z.number().int().min(1).max(10),unit:unit.optional(),reps:z.number().int().min(1).max(3600)}).refine(x=>x.unit==='seconds'||x.reps<=100);
+const task=z.object({id:z.string().min(1).max(100),date:z.string().regex(/^\d{4}-\d{2}-\d{2}$/),name:z.string().min(1).max(60),status:z.enum(['planned','active','done'])});
+export const payloadSchema=z.object({logs:z.array(log).max(2000),customExercises:z.array(custom).max(200),manualItems:z.array(manual).max(20),tasks:z.array(task).max(200).default([])});
+export const updateSchema=z.object({revision:z.number().int().min(0).nullable(),payload:payloadSchema});
+export const reviewSchema=z.object({text:z.string().trim().min(5).max(5000)});
