@@ -13,7 +13,7 @@
 - メニュー構築、端末内Hevy CSV分析、構成レビュー、相談文生成
 - Cloudflare Workers + D1による個人別保存と更新競合の検出
 - ChatGPT認証。Google / Apple OAuthは設定後に利用可能。メール・パスワード入力は廃止
-- Workers AI用の保護されたレビューAPI。実AI接続はCloudflare設定待ち
+- Workers AIの保護されたレビューAPI。Cloudflare Freeプランで日本語のレビュー生成を確認
 
 ## 実装
 
