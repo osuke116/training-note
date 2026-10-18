@@ -22,10 +22,10 @@
 
 ## 接続の現在地
 
-- Workers / D1: Sites経由で接続する。
+- Workers / D1: Sites経由で接続済み。
 - ChatGPT: ホストが用意する `/signin-with-chatgpt` / `/signout-with-chatgpt` を利用。
-- Google: Google Cloud OAuth client ID/secretと許可済みリダイレクトURIをSupabaseに設定する必要がある。
-- Apple: Apple Developer側のService ID、Key、Team ID等を設定する必要がある。鍵の有効期限・更新も運営が管理する。
+- Google: 専用Google Cloudプロジェクト training-note-auth のWebクライアントをSupabaseへ設定済み。Google側は本番環境、Safariでログインと再読み込み後の保持を確認。
+- Apple: 利用者の選択により今回は準備中。Apple Developer側のService ID、Key、Team ID等が必要で、費用を伴う登録は行っていない。
 - Google/AppleはSupabase設定を照会し、有効でないものを「準備中」として無効化する。機能しているように見せるダミーログインは作らない。
 - Workers AI: ユーザーのCloudflareアカウントに専用 `training-note-ai` Workerを公開し、`AI` バインディングで推論。Sitesはサーバー側だけで `CF_AI_PROXY_URL` と秘密値 `CF_AI_PROXY_SECRET` を使って接続する。CLIのOAuthトークンはサイトやGitHubへ保存しない。
 - 秘密値はブラウザやGitHubへ送らない。接続設定がない場合はAPIが503を返し、画面は「接続準備中」を表示する。
